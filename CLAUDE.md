@@ -34,8 +34,8 @@ CI (`.github/workflows/ci.yml`, GitHub Actions) runs restore → build (Release)
 
 ## Release checklist
 
-1. Set `PackageProjectUrl` in `src/Directory.Build.props` once the repository has a public remote (`RepositoryUrl` and the commit come from git automatically; they are empty until the repo has a commit and a remote).
-2. Bump `VersionPrefix`.
+1. Bump `VersionPrefix`. (`PackageProjectUrl` is set in `src/Directory.Build.props`; `RepositoryUrl` and the commit come from git automatically.)
+2. Check that CI is green on the commit being released and publish its `packages` artifact.
 3. After the first version is published, set `PackageValidationBaselineVersion` to it so `dotnet pack` fails on undeclared API breaks; keep it at the latest published version afterwards.
 
 ## Architecture

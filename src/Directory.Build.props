@@ -10,6 +10,7 @@
     <Authors>Vinicius</Authors>
     <Copyright>Copyright (c) Vinicius</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/eovinicius/veredito</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>result;result-pattern;error-handling;railway;functional</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
