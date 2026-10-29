@@ -34,9 +34,12 @@ CI (`.github/workflows/ci.yml`, GitHub Actions) runs restore → build (Release)
 
 ## Release checklist
 
-1. Bump `VersionPrefix`. (`PackageProjectUrl` is set in `src/Directory.Build.props`; `RepositoryUrl` and the commit come from git automatically.)
-2. Check that CI is green on the commit being released and publish its `packages` artifact.
-3. After the first version is published, set `PackageValidationBaselineVersion` to it so `dotnet pack` fails on undeclared API breaks; keep it at the latest published version afterwards.
+Publishing is done by `.github/workflows/release.yml` when a `v*` tag is pushed: it tests, packs with the tag as the version (`v0.1.0` → `0.1.0`) and pushes to nuget.org through Trusted Publishing (OIDC via `NuGet/login`, user `eovinicius`; no API key is stored). The nuget.org policy must match owner `eovinicius`, repository `veredito`, workflow `release.yml` — renaming the file breaks publishing. A published version can only be unlisted, never deleted.
+
+1. Check that CI is green on the commit being released.
+2. Bump `VersionPrefix` to the version being released, so local builds match.
+3. `git tag vX.Y.Z && git push origin vX.Y.Z`, then follow the Release run.
+4. After the first version is published, set `PackageValidationBaselineVersion` to it so `dotnet pack` fails on undeclared API breaks; keep it at the latest published version afterwards.
 
 ## Architecture
 
