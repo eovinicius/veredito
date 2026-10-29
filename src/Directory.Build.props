@@ -1,0 +1,34 @@
+<Project>
+
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <!-- Shared by every package published from src/. -->
+  <PropertyGroup>
+    <!-- Supported LTS releases only, from net8.0 onwards. -->
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <Authors>Vinicius</Authors>
+    <Copyright>Copyright (c) Vinicius</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>result;result-pattern;error-handling;railway;functional</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Deterministic>true</Deterministic>
+    <!-- CI sets CI=true: normalizes source paths in the PDBs. Left off locally so debugging keeps local paths. -->
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+    <!-- SourceLink ships with the SDK; these put the repository URL and commit in the .nuspec and embed generated sources. -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <!-- Built into the SDK (no dependency). Set PackageValidationBaselineVersion after the first release to catch API breaks. -->
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <!-- No reflection: safe for trimming and Native AOT. Also enables the analyzers that keep it that way. -->
+    <IsAotCompatible>true</IsAotCompatible>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)../README.md" Pack="true" PackagePath="/" Visible="false" />
+  </ItemGroup>
+
+</Project>
